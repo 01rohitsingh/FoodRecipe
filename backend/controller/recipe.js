@@ -44,8 +44,17 @@ const updateRecipe = (req, res) => {
   res.json({ message: "hello" })
 }
 
-const deleteRecipe = (req, res) => {
-  res.json({ message: "hello" })
+const deleteRecipe = async(req, res) => {
+  const recipe=await Recipes.findById(req.params.id)
+  try{
+    if(recipe){
+      await Recipes.findByIdAndDelete(req.params.id)
+      return res.json({meassage:"succesfull  deleted"})
+    }
+  }
+  catch(err){
+    res.json({message:"err"})
+  }
 }
 
 
