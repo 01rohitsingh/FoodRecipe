@@ -1,52 +1,52 @@
-const Recipes=require("../models/recipe")
+const Recipes = require("../models/recipe")
 
-const getRecipes= async (req,res)=>{
-  const recipes=await Recipes.find();
+const getRecipes = async (req, res) => {
+  const recipes = await Recipes.find();
   return res.json(recipes)
 };
 
-const getRecipe= async(req,res)=>{
-  const recipe=await Recipes.findById(req.params.id)
+const getRecipe = async (req, res) => {
+  const recipe = await Recipes.findById(req.params.id)
   return res.json(recipe)
 };
 
-const addRecipe= async (req,res) =>{
-   const {title, ingredients,instructions,time,}=req.body;
+const addRecipe = async (req, res) => {
+  const { title, ingredients, instructions, time, } = req.body;
 
-   if(!title || !ingredients || !instructions )
+  if (!title || !ingredients || !instructions)
     return res.json({
-    message:"Require fields cant empty"
-  })
-  
-  const newRecipe=await Recipes.create({title, ingredients,instructions,time})
+      message: "Require fields cant empty"
+    })
+
+  const newRecipe = await Recipes.create({ title, ingredients, instructions, time })
 
   return res.json(newRecipe)
 
 };
 
-const editRecipe=async (req,res)=>{
-   const {title, ingredients,instructions,time}= req.body;
-   let recipe=await Recipes.findById(req.params.id)
-   try{
-    if(recipe)
-    {
-      await Recipes.findByIdAndUpdate(req.params.id,req.body,{new:true})
-       res.json({title, ingredients,instructions,time})
+const editRecipe = async (req, res) => {
+  const { title, ingredients, instructions, time } = req.body;
+
+
+  let recipe = await Recipes.findById(req.params.id)
+  try {
+    if (recipe) {
+      await Recipes.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      res.json({ title, ingredients, instructions, time })
     }
-   }
-   catch(err){
-    return res.status(400).json({message:"err"})
-   }
-  
+  }
+  catch (err) {
+    return res.status(400).json({ message: "err" })
+  }
 }
 
-const updateRecipe=(req,res)=>{
-   res.json({message:"hello"})
+const updateRecipe = (req, res) => {
+  res.json({ message: "hello" })
 }
 
-const deleteRecipe=(req,res)=>{
-   res.json({message:"hello"})
+const deleteRecipe = (req, res) => {
+  res.json({ message: "hello" })
 }
 
 
-module.exports={getRecipes,getRecipe,addRecipe,editRecipe,updateRecipe,deleteRecipe}
+module.exports = { getRecipes, getRecipe, addRecipe, editRecipe, updateRecipe, deleteRecipe }
